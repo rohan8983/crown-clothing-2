@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../utils/firebase/firebase.utils';
+
 import './sign-up-form.style.scss'
 
 const formDefaultFields = {
@@ -14,6 +15,7 @@ const formDefaultFields = {
 function SignUpForm() {
     const [formFields, setFormFields] = useState(formDefaultFields);
     const { displayName, email, password, confirmPassword } = formFields;
+
 
     const resetFormFields = () => {
         setFormFields(formDefaultFields)
@@ -36,7 +38,6 @@ function SignUpForm() {
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
-            console.log(user);
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') { alert('email id already in use!') }
             console.log("User creation encountered and error: ", error);
